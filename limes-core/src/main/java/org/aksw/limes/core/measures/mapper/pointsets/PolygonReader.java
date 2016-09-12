@@ -67,8 +67,9 @@ public class PolygonReader {
                     break;
                 }
                 s = buf.readLine();
-                buf.close();
+                //buf.close();
             }
+            buf.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
