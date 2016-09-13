@@ -30,6 +30,7 @@ public class GeoSparkTest{
 	public static void main(String[] args) throws IOException, URISyntaxException
 	{
 		JavaSparkContext sc = new JavaSparkContext("local[2]", "limes");
+		GeoHR3.DEFAULT_GRANULARITY = 8; //increase complexity by dense
 		
 	    Logger logger = Logger.getLogger(GeoSparkTest.class.getName());
 	    logger.addAppender((Appender) new FileAppender(new SimpleLayout(), "./log.txt"));
@@ -54,7 +55,6 @@ public class GeoSparkTest{
 		startTime = System.currentTimeMillis();
 		ParallelGeoHR3 parallelGeoHR3 = new ParallelGeoHR3(0.5f, GeoHR3.DEFAULT_GRANULARITY,
 				MeasureType.GEO_NAIVE_HAUSDORFF, new NaiveGeoLoadBalancer(nThreadCount), nThreadCount); 
-		logger.info("ParallelGeoHr3 constructor time = " + (System.currentTimeMillis() - startTime) + "ms");
 		mapping = parallelGeoHR3.run(sourcePolygonSet, targetPolygonSet);
 		long parallelHr3Time = System.currentTimeMillis() - startTime;
 		logger.info("Found correspondences = " + mapping.size());

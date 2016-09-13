@@ -104,8 +104,7 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 		GeoIndex target = assignSquares(targetData);
 		long end = System.currentTimeMillis();
 		indexingTime = end - begin;
-		// System.out.println("Parallel Geo-Indexing took: " + indexingTime + "
-		// ms");
+		System.out.println("Parallel Geo-Indexing took: " + indexingTime + " ms");
 		if (verbose) {
 			System.out.println("Geo-Indexing took: " + indexingTime + " ms");
 			System.out.println("|Source squares|= " + source.squares.keySet().size());
@@ -135,7 +134,6 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 		// Divide tasks equal likely between threads
 		begin = System.currentTimeMillis();
 		List<GeoHR3Thread> threads = new ArrayList<GeoHR3Thread>();
-		System.out.println("Tasks = " + tasks.size());
 		List<Multimap<GeoSquare, GeoSquare>> balancedLoad = geoLoadBalancer.getBalancedLoad(tasks);
 		loadBalancerTime = System.currentTimeMillis() - begin;
 		// System.out.println("(Overhead) " + geoLoadBalancer.getName() + "
