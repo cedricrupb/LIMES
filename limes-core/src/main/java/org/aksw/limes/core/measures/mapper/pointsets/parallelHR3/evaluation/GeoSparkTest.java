@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Set;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 import org.apache.spark.api.java.JavaSparkContext;
 
 /**
@@ -29,6 +32,7 @@ public class GeoSparkTest{
 		JavaSparkContext sc = new JavaSparkContext("local[2]", "limes");
 		
 	    Logger logger = Logger.getLogger(GeoSparkTest.class.getName());
+	    logger.addAppender((Appender) new FileAppender(new SimpleLayout(), "./log.txt"));
 	    
 	 	Set<Polygon> sourcePolygonSet = PolygonReader.readPolygons(args[0]);
 		Set<Polygon> targetPolygonSet = PolygonReader.readPolygons(args[1]);	
