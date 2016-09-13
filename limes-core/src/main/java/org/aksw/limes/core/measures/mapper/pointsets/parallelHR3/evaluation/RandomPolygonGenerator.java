@@ -25,7 +25,7 @@ public class RandomPolygonGenerator {
 	private static final Logger logger = Logger.getLogger(RandomPolygonGenerator.class.getName());
 
 	private static final String POLYGON_PREFIX = "polygon_";
-	private static Random r = new Random();
+	private static Random r = new Random(System.currentTimeMillis());
 	private static float mean; 
 	private static  float variance;
 	private static  long polygonCounter;
@@ -183,7 +183,7 @@ public class RandomPolygonGenerator {
 	public static void main(String... aArgs) throws IOException{
 		RandomPolygonGenerator r = new RandomPolygonGenerator();
 		Set<Polygon> polygons = r.createRandomPolygons(100000, 3, 20);
-		r.savePlygonsToFile(polygons, "d:/random.csv");
+		r.savePlygonsToFile(polygons, "d:/random2.csv");
 //		for (Polygon poly : polygons) {
 //			System.out.print(poly.uri + " " );
 //			for ( Point  p: poly.points) {
