@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,7 +50,7 @@ import org.aksw.limes.core.io.mapping.AMapping;
  * @author sherif
  *
  */
-public class ParallelGeoHR3 extends GeoHR3 {
+public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 
 	public long loadBalancerTime;
 	public int maxThreadNr;
@@ -68,6 +69,12 @@ public class ParallelGeoHR3 extends GeoHR3 {
 	 * @param hd
 	 * @author sherif
 	 */
+	public ParallelGeoHR3()
+	{
+		this(0.5f, GeoHR3.DEFAULT_GRANULARITY,MeasureType.GEO_NAIVE_HAUSDORFF, new NaiveGeoLoadBalancer(2), 2);
+			//TODO default thread count
+	}
+	
 	public ParallelGeoHR3(float distanceThreshold, int granularity, MeasureType hd, GeoLoadBalancer geoLoadBalancer,
 			int maxThreadsNr) {
 		super(distanceThreshold, granularity, hd);

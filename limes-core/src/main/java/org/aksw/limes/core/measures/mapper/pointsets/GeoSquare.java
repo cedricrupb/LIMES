@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.mapper.pointsets;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
  *
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class GeoSquare {
+public class GeoSquare implements Serializable {
 
     public Set<Polygon> elements;
 

@@ -1,11 +1,12 @@
 package org.aksw.limes.core.datastrutures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-public class Point {
+public class Point implements Serializable{
 
     public List<Double> coordinates;
     public String label;

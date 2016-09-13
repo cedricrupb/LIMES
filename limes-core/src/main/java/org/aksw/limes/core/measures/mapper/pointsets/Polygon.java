@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.mapper.pointsets;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,16 @@ import com.vividsolutions.jts.io.WKTReader;
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  * @author psmeros
  */
-public class Polygon {
+public class Polygon implements Serializable {
 
     public List<Point> points;
     public String uri;
+    
+    public Polygon()
+    {
+    	uri = "";
+    	points = new ArrayList<Point>();
+    }
 
     public Polygon(String name) {
         uri = name;

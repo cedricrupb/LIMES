@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.mapper.pointsets;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ import org.aksw.limes.core.measures.measure.pointsets.hausdorff.IndexedHausdorff
  *
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class GeoHR3 {
+public class GeoHR3 implements Serializable {
     // this angularThreshold in is degrees, thus need to convert km to degrees
     // when using
     // this index
@@ -46,6 +47,11 @@ public class GeoHR3 {
     protected float angularThreshold;
     protected float distanceThreshold;
     int latMax, latMin, longMax, longMin;
+    
+    public GeoHR3()
+    {
+    	 this(0.5f, GeoHR3.DEFAULT_GRANULARITY, MeasureType.GEO_NAIVE_HAUSDORFF);
+    }
 
     public GeoHR3(float distanceThreshold, int granularity, MeasureType hd) {
         this.angularThreshold = (float) ((distanceThreshold * 180) / (Math.PI * OrthodromicDistance.R));

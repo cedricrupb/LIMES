@@ -15,14 +15,14 @@ import org.aksw.limes.core.io.mapping.MappingFactory;
 import org.aksw.limes.core.measures.mapper.pointsets.OrchidMapper;
 import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
 import org.aksw.limes.core.measures.measure.pointsets.APointsetsMeasure;
-
+import java.io.Serializable;
 /**
  * Brute force approach to computing the SetMeasure distance between two
  * polygons
  * 
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class NaiveHausdorffMeasure extends APointsetsMeasure {
+public class NaiveHausdorffMeasure extends APointsetsMeasure implements Serializable {
 
     public int computations;
 
