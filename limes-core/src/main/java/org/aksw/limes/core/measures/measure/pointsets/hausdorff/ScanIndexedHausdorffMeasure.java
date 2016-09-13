@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.measure.pointsets.hausdorff;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,11 @@ import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
 /**
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class ScanIndexedHausdorffMeasure extends CentroidIndexedHausdorffMeasure {
+public class ScanIndexedHausdorffMeasure extends CentroidIndexedHausdorffMeasure implements Serializable {
 
+	public ScanIndexedHausdorffMeasure() {
+		super();
+	}
     @Override
     public double computeDistance(Polygon s, Polygon t, double threshold) {
         AMapping knownDistances = MappingFactory.createDefaultMapping();

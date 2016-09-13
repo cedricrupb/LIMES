@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.measure.pointsets.hausdorff;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ import org.aksw.limes.core.measures.measure.pointsets.GeoGreatEllipticMeasure;
  *
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class CentroidIndex extends PolygonIndex {
+public class CentroidIndex extends PolygonIndex implements Serializable {
 
     public static boolean USE_GREAT_ELLIPTIC_DISTANCE = true;
     public Map<String, Circle> centroids;

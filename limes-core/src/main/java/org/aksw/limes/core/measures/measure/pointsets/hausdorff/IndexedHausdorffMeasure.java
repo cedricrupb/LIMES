@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.measure.pointsets.hausdorff;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,7 @@ import org.aksw.limes.core.measures.measure.pointsets.APointsetsMeasure;
 /**
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class IndexedHausdorffMeasure extends APointsetsMeasure {
+public class IndexedHausdorffMeasure extends APointsetsMeasure implements Serializable  {
 
     public PolygonIndex targetIndex;
     public NaiveHausdorffMeasure nh;

@@ -4,6 +4,8 @@
  */
 package org.aksw.limes.core.measures.measure.pointsets.hausdorff;
 
+import java.io.Serializable;
+
 import org.aksw.limes.core.datastrutures.Point;
 import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
 
@@ -12,7 +14,7 @@ import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
  * 
  * @author Axel-C. Ngonga Ngomo (ngonga@informatik.uni-leipzig.de)
  */
-public class FastHausdorffMeasure extends NaiveHausdorffMeasure {
+public class FastHausdorffMeasure extends NaiveHausdorffMeasure implements Serializable  {
 
     /**
      * Constructor

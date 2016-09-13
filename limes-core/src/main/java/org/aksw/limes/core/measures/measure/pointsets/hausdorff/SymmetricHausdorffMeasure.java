@@ -4,6 +4,8 @@
  */
 package org.aksw.limes.core.measures.measure.pointsets.hausdorff;
 
+import java.io.Serializable;
+
 import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
 
 /**
@@ -11,8 +13,12 @@ import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
  * @author Mohamed Sherif (sherif@informatik.uni-leipzig.de)
  * @version Jul 21, 2016
  */
-public class SymmetricHausdorffMeasure extends NaiveHausdorffMeasure {
+public class SymmetricHausdorffMeasure extends NaiveHausdorffMeasure implements Serializable {
 
+	public SymmetricHausdorffMeasure(){
+		super();
+	}
+	
     /*
      * (non-Javadoc)
      * 

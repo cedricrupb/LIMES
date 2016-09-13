@@ -4,6 +4,7 @@
  */
 package org.aksw.limes.core.measures.measure.pointsets.hausdorff;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import org.aksw.limes.core.io.mapping.AMapping;
@@ -15,7 +16,7 @@ import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
  * @author Mohamed Sherif (sherif@informatik.uni-leipzig.de)
  * @version Jul 21, 2016
  */
-public class CentroidIndexedHausdorffMeasure extends IndexedHausdorffMeasure {
+public class CentroidIndexedHausdorffMeasure extends IndexedHausdorffMeasure implements Serializable {
 
     public CentroidIndex sourceIndex;
     public IndexedHausdorffMeasure ih = new IndexedHausdorffMeasure();
