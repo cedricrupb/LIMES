@@ -123,9 +123,8 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 		}
 
 		// create tasks as pairs of squares to be compared
-		Multimap<GeoSquare, GeoSquare> tasks = createTasks(source, target);
-		// Multimap<GeoSquare, GeoSquare> tasks = createTasksParallel(source,
-		// target);
+		//Multimap<GeoSquare, GeoSquare> tasks = createTasks(source, target);
+		Multimap<GeoSquare, GeoSquare> tasks = createTasksParallel(source, target);
 		// System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5");
 		// for(Entry<GeoSquare, GeoSquare> e : tasks.entries()){
 		// System.out.println(e.getKey().size() * e.getValue().size());
@@ -205,20 +204,17 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 		List<TaskCreatorThread> threads = new ArrayList<TaskCreatorThread>();
 		int subsetLength = (int) Math.ceil((double) source.squares.size() / maxThreadNr);
 		for (int i = 0; i < source.squares.size(); i += subsetLength) {
-			TaskCreatorThread t = new TaskCreatorThread(this.distanceThreshold, this.granularity, null, source, target,
-					i, subsetLength);
+			TaskCreatorThread t = new TaskCreatorThread(this.distanceThreshold, this.granularity, mType, source, target, i, subsetLength);
 			(new Thread(t)).start();
 			threads.add(t);
 		}
-
 		try {
 			TaskCreatorThread.allDone.acquire(maxThreadNr);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		tasksCreationTime = System.currentTimeMillis() - begin;
-		// System.out.println("(Overhead) Parallel Tasks creation took: " +
-		// tasksCreationTime + " ms");
+		System.out.println("(Overhead) Parallel Tasks creation took: " + tasksCreationTime + " ms");
 		return TaskCreatorThread.getTasks();
 	}
 
