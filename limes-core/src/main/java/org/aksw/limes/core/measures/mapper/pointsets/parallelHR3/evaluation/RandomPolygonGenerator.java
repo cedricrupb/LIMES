@@ -170,7 +170,7 @@ public class RandomPolygonGenerator {
 		for (Polygon poly : polygons) {
 			bw.write(poly.uri + " ");
 			for ( Point  p: poly.points) {
-				bw.write(p.coordinates.get(1) + " " + p.coordinates.get(0)); 
+				bw.write(p.coordinates.get(1) + " " + p.coordinates.get(0) + " "); 
 			}
 			bw.write("\n");
 		}
@@ -182,8 +182,8 @@ public class RandomPolygonGenerator {
 	
 	public static void main(String... aArgs) throws IOException{
 		RandomPolygonGenerator r = new RandomPolygonGenerator();
-		Set<Polygon> polygons = r.createRandomPolygons(5, 3, 3);
-		r.savePlygonsToFile(polygons, "/media/lod2/geodatasets/datasets/test.csv");
+		Set<Polygon> polygons = r.createRandomPolygons(100000, 3, 20);
+		r.savePlygonsToFile(polygons, "d:/random.csv");
 //		for (Polygon poly : polygons) {
 //			System.out.print(poly.uri + " " );
 //			for ( Point  p: poly.points) {
