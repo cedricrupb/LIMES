@@ -148,8 +148,8 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 		GeoHR3Thread.allDone = new Semaphore(0);
 		for (Multimap<GeoSquare, GeoSquare> task : balancedLoad) {
 			GeoHR3Thread t = new GeoHR3Thread(setMeasure, distanceThreshold, task);
-			(new Thread(t)).start();
 			threads.add(t);
+			(new Thread(t)).start();
 		}
 
 		// Wait until all threads finished
@@ -204,9 +204,10 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 		List<TaskCreatorThread> threads = new ArrayList<TaskCreatorThread>();
 		int subsetLength = (int) Math.ceil((double) source.squares.size() / maxThreadNr);
 		for (int i = 0; i < source.squares.size(); i += subsetLength) {
-			TaskCreatorThread t = new TaskCreatorThread(this.distanceThreshold, this.granularity, mType, source, target, i, subsetLength);
-			(new Thread(t)).start();
+			int size = Math.min(subsetLength, source.squares.size() - 1 - i); 
+			TaskCreatorThread t = new TaskCreatorThread(this.distanceThreshold, this.granularity, mType, source, target, i, size);
 			threads.add(t);
+			(new Thread(t)).start();
 		}
 		try {
 			TaskCreatorThread.allDone.acquire(maxThreadNr);
@@ -256,7 +257,6 @@ public class ParallelGeoHR3 extends GeoHR3 implements Serializable{
 
 		for (int threadNr = 2; threadNr <= 4; threadNr *= 2) {
 			System.out.println("-------------------- Parallel GeoHR3 --------------------");
-
 			System.out.println();
 			System.out.println();
 			System.out.println("Number of Threads = " + threadNr);
