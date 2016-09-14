@@ -54,39 +54,33 @@ public class TaskCreatorThread extends GeoHR3 implements Runnable{
 	 */
 	@Override
 	public void run() {
-//		long begin = System.currentTimeMillis();
-		try{
+	//long begin = System.currentTimeMillis();
 			int i = 0; // deal only with the part starting from (start) to (start+size)
 			for (Integer latIndex : source.squares.keySet()) {
-				if(i < start){
-					i++;
-				}else{
-					for (Integer longIndex : source.squares.get(latIndex).keySet()) {
-						if(i > (start + size)){
-							break;
-						}
-						GeoSquare g1 = source.getSquare(latIndex, longIndex);
-						Set<List<Integer>> squares = getSquaresToCompare(latIndex, longIndex, target);
-						for (List<Integer> squareIndex : squares) {
-							GeoSquare g2 = target.getSquare(squareIndex.get(0), squareIndex.get(1));
-							if(!g1.elements.isEmpty() && !g2.elements.isEmpty()){
-								synchronized (tasks) {
-									tasks.put(g1, g2);
+				if(i >= start) {
+					if(i < start + size) {
+						for (Integer longIndex : source.squares.get(latIndex).keySet()) {
+							GeoSquare g1 = source.getSquare(latIndex, longIndex);
+							Set<List<Integer>> squares = getSquaresToCompare(latIndex, longIndex, target);
+							for (List<Integer> squareIndex : squares) {
+								GeoSquare g2 = target.getSquare(squareIndex.get(0), squareIndex.get(1));
+								if(!g1.elements.isEmpty() && !g2.elements.isEmpty()){
+									synchronized (tasks) {
+										tasks.put(g1, g2);
+									}
 								}
 							}
-
 						}
-						i++;
 					}
+					else
+						break;
 				}
+				i++;
 			}
 //			synchronized (allDone) {
 			allDone.release();
 //			}
 //			System.out.pr<intln("\t$$$$$ TaskCreatorThread: " + (System.currentTimeMillis()-begin) + " ms");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }
