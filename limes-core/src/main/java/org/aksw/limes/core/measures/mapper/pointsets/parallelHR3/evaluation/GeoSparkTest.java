@@ -1,6 +1,7 @@
 package org.aksw.limes.core.measures.mapper.pointsets.parallelHR3.evaluation;
 
 import org.aksw.limes.core.io.mapping.AMapping;
+import org.aksw.limes.core.io.mapping.MappingFactory;
 import org.aksw.limes.core.measures.mapper.pointsets.GeoHR3;
 import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
 import org.aksw.limes.core.measures.mapper.pointsets.PolygonReader;
@@ -29,15 +30,25 @@ public class GeoSparkTest{
 	
 	public static void main(String[] args) throws IOException, URISyntaxException
 	{
-		JavaSparkContext sc = new JavaSparkContext("local[2]", "limes");
-		GeoHR3.DEFAULT_GRANULARITY = 8; //increase complexity by dense
+		//Run this program:
+		//1. export jar with default execution is this class
+		//2. run spark-submit
+		//./bin/spark-submit.cmd --driver-memory <Memory> <path to jar> <args> 
+
+		String inputSource = args[0];
+		String inputTarget = args[1];
+		int granularity = Integer.parseInt(args[2]);
+		int threadCount = Integer.parseInt(args[3]);
+		GeoHR3.DEFAULT_GRANULARITY = granularity; 
+		JavaSparkContext sc = new JavaSparkContext("local["+ threadCount + "]", "limes");
 		
 	    Logger logger = Logger.getLogger(GeoSparkTest.class.getName());
 	    logger.addAppender((Appender) new FileAppender(new SimpleLayout(), "./log.txt"));
 	    
-	 	Set<Polygon> sourcePolygonSet = PolygonReader.readPolygons(args[0]);
-		Set<Polygon> targetPolygonSet = PolygonReader.readPolygons(args[1]);	
-		
+	 	Set<Polygon> sourcePolygonSet = PolygonReader.readPolygons(inputSource);
+		Set<Polygon> targetPolygonSet = PolygonReader.readPolygons(inputTarget);	
+		AMapping mapping = MappingFactory.createDefaultMapping();
+			
 		logger.info("-------------------- Input data --------------------");
 		logger.info("Source: " + sourcePolygonSet.size());
 		logger.info("Target: " + targetPolygonSet.size());
@@ -45,16 +56,15 @@ public class GeoSparkTest{
 		logger.info("-------------------- GeoHR3 --------------------");
 		long startTime = System.currentTimeMillis();
 		GeoHR3 geoHr3 = new GeoHR3(0.5f, GeoHR3.DEFAULT_GRANULARITY, MeasureType.GEO_NAIVE_HAUSDORFF);
-		AMapping mapping = geoHr3.run(sourcePolygonSet, targetPolygonSet);
+		mapping = geoHr3.run(sourcePolygonSet, targetPolygonSet);
 		long hr3Time = System.currentTimeMillis() - startTime;
 		logger.info("Found correspondences = " + mapping.size());
 		logger.info("GeoHR3 total time = " + hr3Time + "ms");
 
 		logger.info("-------------------- Parallel GeoHR3 --------------------");
-		int nThreadCount = 2;
 		startTime = System.currentTimeMillis();
 		ParallelGeoHR3 parallelGeoHR3 = new ParallelGeoHR3(0.5f, GeoHR3.DEFAULT_GRANULARITY,
-				MeasureType.GEO_NAIVE_HAUSDORFF, new NaiveGeoLoadBalancer(nThreadCount), nThreadCount); 
+				MeasureType.GEO_NAIVE_HAUSDORFF, new NaiveGeoLoadBalancer(threadCount), threadCount); 
 		mapping = parallelGeoHR3.run(sourcePolygonSet, targetPolygonSet);
 		long parallelHr3Time = System.currentTimeMillis() - startTime;
 		logger.info("Found correspondences = " + mapping.size());
@@ -64,7 +74,7 @@ public class GeoSparkTest{
 		
 		logger.info("-------------------- Spark --------------------");
 		startTime = System.currentTimeMillis();
-		GeoSpark geoSprk = new GeoSpark(0.5f, GeoHR3.DEFAULT_GRANULARITY, MeasureType.GEO_NAIVE_HAUSDORFF, null, nThreadCount);
+		GeoSpark geoSprk = new GeoSpark(0.5f, GeoHR3.DEFAULT_GRANULARITY, MeasureType.GEO_NAIVE_HAUSDORFF, null, threadCount);
 		mapping = geoSprk.run(sourcePolygonSet, targetPolygonSet, sc, logger);
 		long sparkTime = System.currentTimeMillis() - startTime;
 		logger.info("Found correspondences = " + mapping.size());
