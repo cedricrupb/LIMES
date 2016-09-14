@@ -47,6 +47,7 @@ public class GeoHR3 implements Serializable {
     protected float angularThreshold;
     protected float distanceThreshold;
     int latMax, latMin, longMax, longMin;
+    public MeasureType mType;
     
     public GeoHR3()
     {
@@ -64,7 +65,7 @@ public class GeoHR3 implements Serializable {
         latMin = (int) Math.floor(-90f / delta);
         longMax = (int) Math.floor(180f / delta) - 1;
         longMin = (int) Math.floor(-180f / delta);
-
+        mType = hd;
         try {
             setMeasure = (IPointsetsMeasure) MeasureFactory.createMeasure(hd);
         } catch (InvalidMeasureException e) {
