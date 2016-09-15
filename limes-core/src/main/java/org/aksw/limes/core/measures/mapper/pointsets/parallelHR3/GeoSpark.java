@@ -12,6 +12,7 @@ import org.aksw.limes.core.measures.mapper.pointsets.Polygon;
 import org.aksw.limes.core.measures.mapper.pointsets.PolygonIndex;
 import org.aksw.limes.core.measures.mapper.pointsets.parallelHR3.parallelGeoLoadBalancer.GeoLoadBalancer;
 import org.aksw.limes.core.measures.measure.MeasureType;
+import org.aksw.limes.core.measures.measure.pointsets.IPointsetsMeasure;
 import org.aksw.limes.core.measures.measure.pointsets.hausdorff.CentroidIndexedHausdorffMeasure;
 import org.aksw.limes.core.measures.measure.pointsets.hausdorff.IndexedHausdorffMeasure;
 import org.apache.log4j.Logger;
@@ -65,58 +66,9 @@ public class GeoSpark extends ParallelGeoHR3 implements Serializable {
 		GeoIndex source = assignSquares(sourceData);
 		GeoIndex target = assignSquares(targetData);
 
-//		long begin = System.currentTimeMillis();
-//		List<Tuple2<GeoSquare, GeoSquare>> originTasks = createSquareTasks(source, target);
-//		long end = System.currentTimeMillis();
-//		logger.info("Square tasks creation took: " + (end - begin) + " ms");
-//		logger.info(originTasks.size());
-//		JavaRDD<Tuple2<GeoSquare, GeoSquare>> rddSqs = sc.parallelize(originTasks);
-
-//		JavaPairRDD<List<Integer>, GeoSquare> rddSrc = sc.parallelizePairs(toList(source));
-//		JavaPairRDD<List<Integer>, GeoSquare> rddTrg = sc.parallelizePairs(toList(target));
-//		logger.info(rddSrc.count());
-//		logger.info(rddTrg.count());
-//		
-//		JavaRDD<Tuple2<GeoSquare, GeoSquare>> rddSqr = rddSrc.flatMap(new FlatMapFunction<Tuple2<List<Integer>,GeoSquare>, Tuple2<GeoSquare,GeoSquare>>(){
-//			public Iterable<Tuple2<GeoSquare,GeoSquare>> call(Tuple2<List<Integer>, GeoSquare> t) {
-//				Set<List<Integer>> sqCans = getSquaresToCompare(t._1.get(0), t._1.get(1), null);
-//				List<Tuple2<GeoSquare,GeoSquare>> sqToAdd = new ArrayList<Tuple2<GeoSquare,GeoSquare>>();
-//				for(List<Integer> sqPoint : sqCans){
-//					GeoSquare g2 = target.getSquare(sqPoint.get(0), sqPoint.get(1));
-//					sqToAdd.add(new Tuple2<GeoSquare, GeoSquare> (t._2, g2));
-//					//List<GeoSquare> sqTrg = rddTrg.lookup(sqPoint);
-//					//for(GeoSquare sq : sqTrg){
-//						//sqToAdd.add(new Tuple2<GeoSquare, GeoSquare> (t._2, sq));
-//					//}
-//				}
-//				return sqToAdd;
-//			}
-//		});
-//		logger.info(rddSqr.count());
+		JavaRDD<Tuple2<GeoSquare, GeoSquare>> rddSqs = sc.parallelize(toList(createTasksParallel(source, target)));
 		
-//		JavaRDD<Tuple2<Long, GeoSquare>> rddSrc = sc.parallelize(toLongList(source));
-		//JavaRDD<Tuple2<Long, GeoSquare>> rddTrg = sc.parallelize(toLongList(target));
-		//Broadcast<GeoIndex> indTrg = sc.broadcast(target);
-		
-//		JavaRDD<Tuple2<GeoSquare, GeoSquare>> rddSqr = rddSrc.flatMap(new FlatMapFunction<Tuple2<Long,GeoSquare>, Tuple2<GeoSquare,GeoSquare>>(){
-//			public Iterable<Tuple2<GeoSquare,GeoSquare>> call(Tuple2<Long, GeoSquare> t) {
-//				int lat = (int)(t._1()>>32);
-//				int lng = (int)(t._1() & 0xFFFFFFFF);
-//				List<Tuple2<GeoSquare,GeoSquare>> sqToAdd = new ArrayList<Tuple2<GeoSquare,GeoSquare>>();
-//				Set<List<Integer>> sqCans = getSquaresToCompare(lat, lng, null);
-//				for(List<Integer> sqPoint : sqCans){
-//					//GeoSquare g2 = indTrg.getValue().getSquare(lat, lng);
-//					//if (!g2.elements.isEmpty())
-//						sqToAdd.add(new Tuple2<GeoSquare, GeoSquare> (t._2(), t._2()));
-//				}
-//				return sqToAdd;
-//			}
-//		});
-//		logger.info(rddSqr.count());
-		
-		JavaRDD<Tuple2<GeoSquare, GeoSquare>> rddSqr = sc.parallelize(toList(createTasksParallel(source, target)));
-		
-		JavaRDD<Tuple3<String, String, Double>> rddFilter = rddSqr.flatMapToPair(
+		JavaRDD<Tuple3<String, String, Double>> rddFilter = rddSqs.flatMapToPair(
 				new PairFlatMapFunction<Tuple2<GeoSquare, GeoSquare>, String, Tuple2<Polygon, Polygon>>() {
 					public Iterable<Tuple2<String, Tuple2<Polygon, Polygon>>> call(Tuple2<GeoSquare, GeoSquare> t) {
 						List<Tuple2<String, Tuple2<Polygon, Polygon>>> p = new ArrayList<Tuple2<String, Tuple2<Polygon, Polygon>>>(
@@ -136,7 +88,7 @@ public class GeoSpark extends ParallelGeoHR3 implements Serializable {
 						})
 				.map(new Function<Tuple2<String, Tuple2<Polygon, Polygon>>, Tuple3<String, String, Double>>() {
 					public Tuple3<String, String, Double> call(Tuple2<String, Tuple2<Polygon, Polygon>> p) {
-						Double score = setMeasure.computeDistance(p._2._1, p._2._2, distanceThreshold);
+						Double score = setMeasure.computeDistance(p._2._1, p._2._2, 0);
 						return new Tuple3<String, String, Double>(p._2._1.uri, p._2._2.uri, score);
 					}
 				})
@@ -178,13 +130,12 @@ public class GeoSpark extends ParallelGeoHR3 implements Serializable {
 //
 //		logger.info("Polygon tasks (cleaned) = " + rddClean.count());
 //		
-//		
 //		// Matching
 //		JavaRDD<Tuple3<String, String, Double>> rddResult = rddClean
 //				.map(new Function<Tuple2<String, Tuple2<Polygon, Polygon>>, Tuple3<String, String, Double>>() {
 //					public Tuple3<String, String, Double> call(Tuple2<String, Tuple2<Polygon, Polygon>> p) {
-//						Double score = setMeasure.computeDistance(p._2._1, p._2._2, distanceThreshold);
-//						return new Tuple3<String, String, Double>(p._2._1.uri, p._2._2.uri, score);
+//						return new Tuple3<String, String, Double>(p._2._1.uri, p._2._2.uri,
+//								setMeasure.computeDistance(p._2._1, p._2._2, 0));
 //					}
 //				});
 //	
@@ -194,11 +145,11 @@ public class GeoSpark extends ParallelGeoHR3 implements Serializable {
 //						return p._3() <= distanceThreshold;
 //					}
 //				});
-
+		
 		AMapping m = MappingFactory.createDefaultMapping();
 		List<Tuple3<String, String, Double>> rs = rddFilter.collect();
 		for (Tuple3<String, String, Double> r : rs)
-			m.add(r._1(), r._1(), r._3());
+			m.add(r._1(), r._2(), 1 / (1 + r._3()));
 		
 		return m;
 	}
