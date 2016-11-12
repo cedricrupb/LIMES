@@ -29,6 +29,7 @@ public class EvaluatorsTest {
         /*        if(crossValidate)
             testCrossValidate();
         else*/
+        //TODO: Check test because it causes failures
         //testEvaluator();
     }
     public void testEvaluator() {

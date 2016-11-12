@@ -76,6 +76,7 @@ public class WombatCompleteTest {
         }
         assert (wombatComplete.getClass().equals(SupervisedMLAlgorithm.class));
         wombatComplete.init(null, sc, tc);
+        //TODO: Check test because it causes failures
         //MLResults mlModel = wombatComplete.learn(trainingMap);
         //AMapping resultMap = wombatComplete.predict(sc, tc, mlModel);
         //assert (resultMap.equals(refMap));
@@ -95,6 +96,7 @@ public class WombatCompleteTest {
         assert (wombatCompleteU.getClass().equals(UnsupervisedMLAlgorithm.class));
         trainingMap = null;
         wombatCompleteU.init(null, sc, tc);
+        //TODO: Check test because it causes failures
         //MLResults mlModel = wombatCompleteU.learn(new PseudoFMeasure());
         //AMapping resultMap = wombatCompleteU.predict(sc, tc, mlModel);
         //assert (resultMap.equals(refMap));

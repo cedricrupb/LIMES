@@ -77,6 +77,7 @@ public class WombatSimpleTest {
         }
         assert (wombatSimple.getClass().equals(SupervisedMLAlgorithm.class));
         wombatSimple.init(null, sc, tc);
+        //TODO: Check test because it causes failures
         //MLResults mlModel = wombatSimple.learn(trainingMap);
         //AMapping resultMap = wombatSimple.predict(sc, tc, mlModel);
         //assert (resultMap.equals(refMap));
@@ -96,6 +97,7 @@ public class WombatSimpleTest {
         assert (wombatSimpleU.getClass().equals(UnsupervisedMLAlgorithm.class));
         trainingMap = null;
         wombatSimpleU.init(null, sc, tc);
+        //TODO: Check test because it causes failures
         //MLResults mlModel = wombatSimpleU.learn(new PseudoFMeasure());
         //AMapping resultMap = wombatSimpleU.predict(sc, tc, mlModel);
         //assert (resultMap.equals(refMap));
@@ -113,6 +115,7 @@ public class WombatSimpleTest {
         }
         assert (wombatSimpleA.getClass().equals(ActiveMLAlgorithm.class));
         wombatSimpleA.init(null, sc, tc);
+        //TODO: Check test because it causes failures
         /*wombatSimpleA.activeLearn();
         AMapping nextExamples = wombatSimpleA.getNextExamples(3);
         AMapping oracleFeedback = oracleFeedback(nextExamples,trainingMap);
