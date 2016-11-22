@@ -19,9 +19,6 @@ hs_err_pid*
 .settings/
 .DS_Store
 
-# folder Eagle uses default for caches
-cache/
-
 # generated outputs
 /*.nt
 
