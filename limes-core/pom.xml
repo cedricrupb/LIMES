@@ -138,6 +138,7 @@
 			<plugin>
 				<artifactId>exec-maven-plugin</artifactId>
 				<groupId>org.codehaus.mojo</groupId>
+				<version>1.5.0</version>
 				<executions>
 					<execution><!-- symlink hooks to git -->
 						<id>Git-Hooks-Setup</id>
