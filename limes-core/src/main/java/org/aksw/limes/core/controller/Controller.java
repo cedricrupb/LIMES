@@ -5,6 +5,7 @@ import org.aksw.limes.core.execution.engine.ExecutionEngineFactory;
 import org.aksw.limes.core.execution.planning.planner.ExecutionPlannerFactory;
 import org.aksw.limes.core.execution.rewriter.RewriterFactory;
 import org.aksw.limes.core.gui.LimesGUI;
+import org.aksw.limes.core.io.cache.CsvCache;
 import org.aksw.limes.core.io.cache.HybridCache;
 import org.aksw.limes.core.io.config.Configuration;
 import org.aksw.limes.core.io.config.reader.AConfigurationReader;
@@ -124,6 +125,10 @@ public class Controller {
         AMapping results = null;
 
         // 3. Fill Caches
+        // csv cache files are only for research purposes according flink features
+        CsvCache sourceCacheCsv = CsvCache.getData(config.getSourceInfo());
+        CsvCache targetCacheCsv = CsvCache.getData(config.getTargetInfo());
+
         HybridCache sourceCache = HybridCache.getData(config.getSourceInfo());
         HybridCache targetCache = HybridCache.getData(config.getTargetInfo());
 
