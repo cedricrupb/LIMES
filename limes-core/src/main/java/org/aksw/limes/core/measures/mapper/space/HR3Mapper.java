@@ -19,6 +19,8 @@ import org.aksw.limes.core.measures.mapper.space.blocking.BlockingFactory;
 import org.aksw.limes.core.measures.mapper.space.blocking.IBlockingModule;
 import org.aksw.limes.core.measures.measure.space.ISpaceMeasure;
 import org.aksw.limes.core.measures.measure.space.SpaceMeasureFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Uses metric spaces to create blocks.
@@ -27,6 +29,7 @@ import org.aksw.limes.core.measures.measure.space.SpaceMeasureFactory;
  */
 public class HR3Mapper extends AMapper {
 
+    static Logger logger = LoggerFactory.getLogger(HR3Mapper.class.getName());
     public int granularity = 4;
 
     // this might only work for substraction. Need to create something that
@@ -127,6 +130,7 @@ public class HR3Mapper extends AMapper {
         TreeSet<String> uris;
         double sim;
         int counter = 0;
+        int countPairs = 0;
         source.getAllUris().size();
         for (String sourceInstanceUri : source.getAllUris()) {
             counter++;
@@ -150,6 +154,7 @@ public class HR3Mapper extends AMapper {
                     if (targetBlocks.containsKey(blocksToCompare.get(index))) {
                         uris = targetBlocks.get(blocksToCompare.get(index));
                         for (String targetInstanceUri : uris) {
+                            countPairs++;
                             sim = measure.getSimilarity(source.getInstance(sourceInstanceUri),
                                     target.getInstance(targetInstanceUri), property1, property2);
                             if (sim >= threshold) {
@@ -160,6 +165,7 @@ public class HR3Mapper extends AMapper {
                 }
             }
         }
+        logger.info("There are " + countPairs + " pairs to compare");
         // logger.info("Cmin = "+necessaryComparisons+"; C = "+comparisons);
         return mapping;
     }

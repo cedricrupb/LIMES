@@ -123,11 +123,10 @@ public class Controller {
      */
     public static ResultMappings getMapping(Configuration config) {
         AMapping results = null;
-
         // 3. Fill Caches
         // csv cache files are only for research purposes according flink features
-        CsvCache sourceCacheCsv = CsvCache.getData(config.getSourceInfo());
-        CsvCache targetCacheCsv = CsvCache.getData(config.getTargetInfo());
+        CsvCache.getData(config.getSourceInfo());
+        CsvCache.getData(config.getTargetInfo());
 
         HybridCache sourceCache = HybridCache.getData(config.getSourceInfo());
         HybridCache targetCache = HybridCache.getData(config.getTargetInfo());

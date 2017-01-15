@@ -27,6 +27,8 @@ public class CsvCache extends ACache implements ICache{
     // pointing to the parent folder of the "cache" folder
     private File folder = new File("");
 
+    final String CSV_SEPARATOR = "~¿~";
+
 
     /**
      * Constructor
@@ -56,12 +58,27 @@ public class CsvCache extends ACache implements ICache{
         String hash = kb.hashCode() + "";
         File cacheFile = new File(folder + "cache/" + hash + ".csv");
         logger.info("Checking for file " + cacheFile.getAbsolutePath());
+        try {
+            if (cacheFile.exists()) {
+                logger.info("Found cached data. Loading data from file " + cacheFile.getAbsolutePath());
+                cache = CsvCache.loadFromFile(cacheFile);
+            } else {
+                throw new Exception();
+            }
+            if (cache.size() == 0) {
+                /**
+                 * TODO: Uncomment if loadFromFile Method is fully implemented
 
-        if (cacheFile.exists()) {
-            logger.info("Found cached data. Loading data from file " + cacheFile.getAbsolutePath());
-            cache = CsvCache.loadFromFile(cacheFile);
-        }
-        if (cache.size() == 0) {
+                throw new Exception();
+
+                 */
+
+            } else {
+                logger.info("Cached data loaded successfully from file " + cacheFile.getAbsolutePath());
+                logger.info("Size = " + cache.size());
+            }
+        } catch (Exception e) {
+
             // need to add a QueryModuleFactory
             logger.info("No cached data found for " + kb.getId());
             IQueryModule module = QueryModuleFactory.getQueryModule(kb.getType(), kb);
@@ -71,27 +88,28 @@ public class CsvCache extends ACache implements ICache{
                 new File(folder.getAbsolutePath() + File.separatorChar + "cache").mkdir();
             }
             cache.saveToFile(new File(folder.getAbsolutePath() + File.separatorChar + "cache/" + hash + ".csv"));
-
-        } else {
-            logger.info("Cached data loaded successfully from file " + cacheFile.getAbsolutePath());
-            logger.info("Size = " + cache.size());
         }
         return cache;
     }
 
-    private static CsvCache loadFromFile(File cacheFile) {
-        return new CsvCache();
-    }
-
     /**
-     * Encodes a String as Base64 String
+     * TODO: NOT Implemented yet
      *
-     * @param sourceText the string to be encoded
-     * @return the encoded string
+     * @param file
+     * @return
+     * @throws IOException
      */
-    private String b64(String sourceText)
-    {
-        return Base64.getEncoder().encodeToString(sourceText.getBytes());
+    private static CsvCache loadFromFile(File file) throws IOException {
+        String path = file.getAbsolutePath();
+        String parentPath = path.substring(0, path.lastIndexOf("cache"));
+        File parent = new File(parentPath);
+
+        FileInputStream in = new FileInputStream(file);
+
+        CsvCache cache = new CsvCache();
+
+        //TODO: Not implemented yet.
+        return cache;
     }
 
     /**
@@ -101,42 +119,40 @@ public class CsvCache extends ACache implements ICache{
      */
     private void saveToFile(File file) {
         final String codePage = "UTF-8";
-        final String CSV_SEPARATOR = ";";
         logger.info("Saving cache to csv file: " + file.getAbsolutePath());
         try {
             // Create a BufferedWriter for csv file
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), codePage));
 
+            //Write csv heading
+            // first column in csv is the uri
+            bufferedWriter.write("uri");
+            bufferedWriter.write(CSV_SEPARATOR);
+            // property name is 2nd col in csv ...
+            bufferedWriter.write("property");
+            bufferedWriter.write(CSV_SEPARATOR);
+            // followed by its values as separate col
+            bufferedWriter.write("value");
+            bufferedWriter.newLine();
+
             Instance i = getNextInstance();
 
             // iterate over all instances
             while (i != null) {
-                ArrayList<String> csvEntity = new ArrayList<>();
-                int csvEntityIndex = 0;
-
-                // first column in csv is the uri
-                csvEntity.add(csvEntityIndex++, b64(i.getUri()));
-
                 Set<String> props = i.getAllProperties();
-
                 for (String prop : props) {
-                    // property name is a separate col in csv ...
-                    csvEntity.add(csvEntityIndex++, b64(prop));
                     for (String value : i.getProperty(prop)) {
-                        // followed by its values as separate col
-                        csvEntity.add(csvEntityIndex++, b64(value));
-                    }
-                }
-
-                // Write into file
-                for (int x = 0 ; x < csvEntity.size() ; x++) {
-                    bufferedWriter.write(csvEntity.get(x));
-                    if (x + 1 < csvEntity.size()) {
+                        // first column in csv is the uri
+                        bufferedWriter.write(i.getUri());
                         bufferedWriter.write(CSV_SEPARATOR);
+                        // property name is 2nd col in csv ...
+                        bufferedWriter.write(prop);
+                        bufferedWriter.write(CSV_SEPARATOR);
+                        // followed by its values as separate col
+                        bufferedWriter.write(value);
+                        bufferedWriter.newLine();
                     }
-
                 }
-                bufferedWriter.newLine();
                 i = getNextInstance();
             }
 
