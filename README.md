@@ -41,5 +41,3 @@ Then, update the project on Eclipse.
 * [User manual](http://dice-group.github.io/LIMES/user_manual/)
 * [Developer manual](http://dice-group.github.io/LIMES/developer_manual/)
 
-
-test foobar
