@@ -85,6 +85,8 @@ public class MapperFactory {
             return new MongeElkanMapper();
         case RATCLIFF:
             return new RatcliffObershelpMapper();
+        case SIMPLE_EDIT_DISTANCE:
+            return new EDJoinMapper();
         ///////////////////////
         case EUCLIDEAN:
             return new HR3Mapper();

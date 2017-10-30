@@ -2,17 +2,8 @@
 <!DOCTYPE LIMES SYSTEM "limes.dtd">
 <LIMES>
   <PREFIX>
-    <NAMESPACE>http://www.w3.org/2002/07/owl#</NAMESPACE>
-    <LABEL>owl</LABEL>
-  </PREFIX>
-
-  <PREFIX>
-    <NAMESPACE>foo#</NAMESPACE>
-    <LABEL>okkamrestaurant1</LABEL>
-  </PREFIX>
-  <PREFIX>
-    <NAMESPACE>bar#</NAMESPACE>
-    <LABEL>okkamrestaurant2</LABEL>
+    <NAMESPACE>prop#</NAMESPACE>
+    <LABEL>prop</LABEL>
   </PREFIX>
 
   <SOURCE>
@@ -21,7 +12,7 @@
     <VAR>?x</VAR>
     <PAGESIZE>1000</PAGESIZE>
     <RESTRICTION></RESTRICTION>
-    <PROPERTY>okkamrestaurant1:name AS lowercase</PROPERTY>
+    <PROPERTY>prop:name AS lowercase</PROPERTY>
 
     <TYPE>N3</TYPE>
   </SOURCE>
@@ -32,22 +23,22 @@
     <VAR>?y</VAR>
     <PAGESIZE>1000</PAGESIZE>
     <RESTRICTION></RESTRICTION>
-    <PROPERTY>okkamrestaurant2:name AS lowercase</PROPERTY>
+    <PROPERTY>prop:name AS lowercase</PROPERTY>
 
     <TYPE>N3</TYPE>
   </TARGET>
 
-  <METRIC>levenshtein(x.okkamrestaurant1:name, y.okkamrestaurant2:name)</METRIC>
+  <METRIC>simple_edit_distance(x.prop:name, y.prop:name)</METRIC>
 
   <ACCEPTANCE>
-    <THRESHOLD>0.98</THRESHOLD>
+    <THRESHOLD>0.5</THRESHOLD>
     <FILE>my-accepted.txt</FILE>
-    <RELATION>owl:sameAs</RELATION>
+    <RELATION>verySimilar</RELATION>
   </ACCEPTANCE>
   <REVIEW>
-    <THRESHOLD>0.95</THRESHOLD>
+    <THRESHOLD>0.25</THRESHOLD>
     <FILE>my-reviewme.txt</FILE>
-    <RELATION>food#sameAs</RELATION>
+    <RELATION>quiteSimilar</RELATION>
   </REVIEW>
 
   <OUTPUT>N3</OUTPUT>
