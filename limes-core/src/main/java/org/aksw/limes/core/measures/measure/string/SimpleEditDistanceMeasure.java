@@ -11,6 +11,10 @@ public class SimpleEditDistanceMeasure extends StringMeasure {
   private final int insertionCost;
   private final int deletionCost;
 
+  public SimpleEditDistanceMeasure() {
+    this(1,1,1);
+  }
+
   public SimpleEditDistanceMeasure(int matchingCost, int insertionCost, int deletionCost) {
     this.matchingCost = matchingCost;
     this.insertionCost = insertionCost;
