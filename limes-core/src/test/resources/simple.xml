@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LIMES SYSTEM "limes.dtd">
+<LIMES>
+  <PREFIX>
+    <NAMESPACE>http://www.w3.org/2002/07/owl#</NAMESPACE>
+    <LABEL>owl</LABEL>
+  </PREFIX>
+
+  <PREFIX>
+    <NAMESPACE>foo#</NAMESPACE>
+    <LABEL>okkamrestaurant1</LABEL>
+  </PREFIX>
+  <PREFIX>
+    <NAMESPACE>bar#</NAMESPACE>
+    <LABEL>okkamrestaurant2</LABEL>
+  </PREFIX>
+
+  <SOURCE>
+    <ID>restaurant1</ID>
+    <ENDPOINT>src/test/resources/simple1.nt</ENDPOINT>
+    <VAR>?x</VAR>
+    <PAGESIZE>1000</PAGESIZE>
+    <RESTRICTION></RESTRICTION>
+    <PROPERTY>okkamrestaurant1:name AS lowercase</PROPERTY>
+
+    <TYPE>N3</TYPE>
+  </SOURCE>
+
+  <TARGET>
+    <ID>restaurant2</ID>
+    <ENDPOINT>src/test/resources/simple2.nt</ENDPOINT>
+    <VAR>?y</VAR>
+    <PAGESIZE>1000</PAGESIZE>
+    <RESTRICTION></RESTRICTION>
+    <PROPERTY>okkamrestaurant2:name AS lowercase</PROPERTY>
+
+    <TYPE>N3</TYPE>
+  </TARGET>
+
+  <METRIC>levenshtein(x.okkamrestaurant1:name, y.okkamrestaurant2:name)</METRIC>
+
+  <ACCEPTANCE>
+    <THRESHOLD>0.98</THRESHOLD>
+    <FILE>my-accepted.txt</FILE>
+    <RELATION>owl:sameAs</RELATION>
+  </ACCEPTANCE>
+  <REVIEW>
+    <THRESHOLD>0.95</THRESHOLD>
+    <FILE>my-reviewme.txt</FILE>
+    <RELATION>food#sameAs</RELATION>
+  </REVIEW>
+
+  <OUTPUT>N3</OUTPUT>
+</LIMES>
