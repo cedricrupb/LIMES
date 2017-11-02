@@ -20,6 +20,7 @@ public class QGramSimilarityMeasure extends StringMeasure {
     int q = 3;
 
     public QGramSimilarityMeasure(int q) {
+        this.q = q;
         tokenizer = new NGramTokenizer();
     }
 
