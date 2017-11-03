@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Command for Link Spec trees with multiple Boolean Commands:
- * Childs are either Measures(StringMeasure or NumberMeasure) or NestedBooleans.
+ * Childs are either Measures(AStringMeasure or NumberMeasure) or NestedBooleans.
  *
  * @author Klaus Lyko
  * @author Mohamed Sherif (sherif@informatik.uni-leipzig.de)

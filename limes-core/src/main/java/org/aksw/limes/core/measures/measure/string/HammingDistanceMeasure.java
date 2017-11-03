@@ -2,7 +2,7 @@ package org.aksw.limes.core.measures.measure.string;
 
 import org.aksw.limes.core.io.cache.Instance;
 
-public class HammingDistanceMeasure extends StringMeasure {
+public class HammingDistanceMeasure extends AStringMeasure {
 
   @Override
   public int getPrefixLength(int tokensNumber, double threshold) {

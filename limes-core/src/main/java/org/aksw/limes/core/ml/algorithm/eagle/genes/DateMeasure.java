@@ -208,7 +208,7 @@ public class DateMeasure extends CommandGene implements IMutateable, ICloneable 
         //		aO=allowedOperations.toArray(aO);
         //		RandomGenerator randomGen = getGPConfiguration().getRandomGenerator();
         //		String newOp = aO[randomGen.nextInt(aO.length)];
-        //		StringMeasure result = new StringMeasure(newOp, getGPConfiguration(), getReturnType(),  getSubReturnType(), m_mutateable);
+        //		AStringMeasure result = new AStringMeasure(newOp, getGPConfiguration(), getReturnType(),  getSubReturnType(), m_mutateable);
         return this;
     }
 

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * This is a enhancement of the plain <code>StringMeasure</code> to support evolution of preprocessing functions.
+ * This is a enhancement of the plain <code>AStringMeasure</code> to support evolution of preprocessing functions.
  * The basic structure is that it has now two children of the return type of both <code>PreprocessingChain</code>
  * and <code>PreprocessingCommand</code>
  *
