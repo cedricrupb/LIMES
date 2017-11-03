@@ -75,10 +75,6 @@ public class QGramSimilarityMeasure extends AStringMeasure {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public String getType() {
-        return "string";
-    }
-
     public double getSimilarity(Instance instance1, Instance instance2, String property1, String property2) {
         double value = 0;
         double sim = 0;

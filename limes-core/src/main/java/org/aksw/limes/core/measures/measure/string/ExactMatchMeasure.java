@@ -43,10 +43,6 @@ public class ExactMatchMeasure extends AStringMeasure {
         return 0d;
     }
 
-    public String getType() {
-        return "string";
-    }
-
     public double getSimilarity(Instance instance1, Instance instance2, String property1, String property2) {
         for (String source : instance1.getProperty(property1)) {
             for (String target : instance2.getProperty(property2)) {

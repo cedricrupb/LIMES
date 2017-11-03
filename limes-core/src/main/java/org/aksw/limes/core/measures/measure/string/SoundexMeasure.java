@@ -119,11 +119,6 @@ public class SoundexMeasure extends AStringMeasure {
     }
 
     @Override
-    public String getType() {
-        return "string";
-    }
-
-    @Override
     public double getSimilarity(Instance instance1, Instance instance2, String property1, String property2) {
         double value = 0;
         double sim = 0;
