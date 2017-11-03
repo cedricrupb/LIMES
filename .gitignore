@@ -24,3 +24,7 @@ hs_err_pid*
 
 # ignore gitbook builds
 _book
+limes-core/limes.log
+limes-core/my-accepted.txt
+limes-core/my-reviewme.txt
+limes-gui/${sys:logFilename}
