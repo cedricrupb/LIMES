@@ -1,6 +1,7 @@
 package org.aksw.limes.core.measures.measure.string;
 
 import static org.apache.commons.lang3.math.NumberUtils.min;
+import static uk.ac.shef.wit.simmetrics.math.MathFuncs.min3;
 
 import org.aksw.limes.core.io.cache.Instance;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,15 +11,17 @@ public class SimpleEditDistanceMeasure extends AStringMeasure {
   private final int matchingCost;
   private final int insertionCost;
   private final int deletionCost;
+  private final int substitutionCost;
 
   public SimpleEditDistanceMeasure() {
-    this(1,1,1);
+    this(0,1,1,1);
   }
 
-  public SimpleEditDistanceMeasure(int matchingCost, int insertionCost, int deletionCost) {
+  public SimpleEditDistanceMeasure(int matchingCost, int insertionCost, int deletionCost, int substitutionCost) {
     this.matchingCost = matchingCost;
     this.insertionCost = insertionCost;
     this.deletionCost = deletionCost;
+    this.substitutionCost = substitutionCost;
   }
 
   @Override
@@ -48,7 +51,7 @@ public class SimpleEditDistanceMeasure extends AStringMeasure {
 
   public int getWorstCaseCost(int length1, int length2) {
     int min = Math.min(length1, length2);
-    int result = min * Math.min(insertionCost+deletionCost, matchingCost);
+    int result = min * Math.min(insertionCost+deletionCost, Math.max(matchingCost, substitutionCost));
     int lengthDifference = length1 - length2;
     if (lengthDifference > 0) {
       result += lengthDifference * deletionCost;
@@ -79,7 +82,11 @@ public class SimpleEditDistanceMeasure extends AStringMeasure {
         if (c1 == c2) {
           currentRow[x+1] = previousRow[x];
         } else {
-          currentRow[x+1] = NumberUtils.min(previousRow[x] + matchingCost,
+          int matchingSubstitutionCost = matchingCost;
+          if (s1.charAt(x) != s2.charAt(y)) {
+            matchingSubstitutionCost = substitutionCost;
+          }
+          currentRow[x+1] = NumberUtils.min(previousRow[x] + matchingSubstitutionCost,
               previousRow[x+1] + insertionCost,
               currentRow[x] + deletionCost);
         }

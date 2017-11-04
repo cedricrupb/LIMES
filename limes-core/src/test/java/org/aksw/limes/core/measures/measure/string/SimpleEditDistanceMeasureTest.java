@@ -10,17 +10,17 @@ public class SimpleEditDistanceMeasureTest {
 
   @Test
   public void testGetWorstCaseCost() {
-    SimpleEditDistanceMeasure measure = new SimpleEditDistanceMeasure(4, 2, 3);
+    SimpleEditDistanceMeasure measure = new SimpleEditDistanceMeasure(0, 2, 3, 4);
     assertEquals(24, measure.getWorstCaseCost(6,6));
     assertEquals(24+6, measure.getWorstCaseCost(6,9));
     assertEquals(24+12, measure.getWorstCaseCost(10,6));
-    measure = new SimpleEditDistanceMeasure(4, 2, 1);
+    measure = new SimpleEditDistanceMeasure(0, 2, 1, 4);
     assertEquals(19, measure.getWorstCaseCost(7,6));
   }
 
   @Test
   public void testGetSimilarity() {
-    SimpleEditDistanceMeasure measure = new SimpleEditDistanceMeasure(4, 2, 3);
+    SimpleEditDistanceMeasure measure = new SimpleEditDistanceMeasure(0, 2, 3, 4);
     final double eps = 0.000001;
     assertEquals(1.0, measure.getSimilarity("", ""), eps);
     assertEquals(1.0, measure.getSimilarity("abc", "abc"), eps);
