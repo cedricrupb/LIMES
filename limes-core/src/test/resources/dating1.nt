@@ -76,29 +76,29 @@
 <http://dating.com/UserX> <myprop#has_pet> "cat" .
 <http://dating.com/UserY> <myprop#has_pet> "dog" .
 <http://dating.com/UserZ> <myprop#has_pet> "cat" .
-<http://dating.com/UserA> <myprop#likes> <http://dating.com/UserB>
-<http://dating.com/UserB> <myprop#likes> <http://dating.com/UserC>
-<http://dating.com/UserC> <myprop#likes> <http://dating.com/UserD>
-<http://dating.com/UserD> <myprop#likes> <http://dating.com/UserE>
-<http://dating.com/UserE> <myprop#likes> <http://dating.com/UserF>
-<http://dating.com/UserF> <myprop#likes> <http://dating.com/UserG>
-<http://dating.com/UserG> <myprop#likes> <http://dating.com/UserH>
-<http://dating.com/UserH> <myprop#likes> <http://dating.com/UserI>
-<http://dating.com/UserI> <myprop#likes> <http://dating.com/UserJ>
-<http://dating.com/UserJ> <myprop#likes> <http://dating.com/UserK>
-<http://dating.com/UserK> <myprop#likes> <http://dating.com/UserL>
-<http://dating.com/UserL> <myprop#likes> <http://dating.com/UserM>
-<http://dating.com/UserM> <myprop#likes> <http://dating.com/UserN>
-<http://dating.com/UserN> <myprop#likes> <http://dating.com/UserO>
-<http://dating.com/UserO> <myprop#likes> <http://dating.com/UserP>
-<http://dating.com/UserP> <myprop#likes> <http://dating.com/UserQ>
-<http://dating.com/UserQ> <myprop#likes> <http://dating.com/UserR>
-<http://dating.com/UserR> <myprop#likes> <http://dating.com/UserS>
-<http://dating.com/UserS> <myprop#likes> <http://dating.com/UserT>
-<http://dating.com/UserT> <myprop#likes> <http://dating.com/UserU>
-<http://dating.com/UserU> <myprop#likes> <http://dating.com/UserV>
-<http://dating.com/UserV> <myprop#likes> <http://dating.com/UserW>
-<http://dating.com/UserW> <myprop#likes> <http://dating.com/UserX>
-<http://dating.com/UserX> <myprop#likes> <http://dating.com/UserY>
-<http://dating.com/UserY> <myprop#likes> <http://dating.com/UserZ>
-<http://dating.com/UserZ> <myprop#likes> <http://dating.com/UserA>
+<http://dating.com/UserA> <myprop#likes> <http://dating.com/UserB> .
+<http://dating.com/UserB> <myprop#likes> <http://dating.com/UserC> .
+<http://dating.com/UserC> <myprop#likes> <http://dating.com/UserD> .
+<http://dating.com/UserD> <myprop#likes> <http://dating.com/UserE> .
+<http://dating.com/UserE> <myprop#likes> <http://dating.com/UserF> .
+<http://dating.com/UserF> <myprop#likes> <http://dating.com/UserG> .
+<http://dating.com/UserG> <myprop#likes> <http://dating.com/UserH> .
+<http://dating.com/UserH> <myprop#likes> <http://dating.com/UserI> .
+<http://dating.com/UserI> <myprop#likes> <http://dating.com/UserJ> .
+<http://dating.com/UserJ> <myprop#likes> <http://dating.com/UserK> .
+<http://dating.com/UserK> <myprop#likes> <http://dating.com/UserL> .
+<http://dating.com/UserL> <myprop#likes> <http://dating.com/UserM> .
+<http://dating.com/UserM> <myprop#likes> <http://dating.com/UserN> .
+<http://dating.com/UserN> <myprop#likes> <http://dating.com/UserO> .
+<http://dating.com/UserO> <myprop#likes> <http://dating.com/UserP> .
+<http://dating.com/UserP> <myprop#likes> <http://dating.com/UserQ> .
+<http://dating.com/UserQ> <myprop#likes> <http://dating.com/UserR> .
+<http://dating.com/UserR> <myprop#likes> <http://dating.com/UserS> .
+<http://dating.com/UserS> <myprop#likes> <http://dating.com/UserT> .
+<http://dating.com/UserT> <myprop#likes> <http://dating.com/UserU> .
+<http://dating.com/UserU> <myprop#likes> <http://dating.com/UserV> .
+<http://dating.com/UserV> <myprop#likes> <http://dating.com/UserW> .
+<http://dating.com/UserW> <myprop#likes> <http://dating.com/UserX> .
+<http://dating.com/UserX> <myprop#likes> <http://dating.com/UserY> .
+<http://dating.com/UserY> <myprop#likes> <http://dating.com/UserZ> .
+<http://dating.com/UserZ> <myprop#likes> <http://dating.com/UserA> .
